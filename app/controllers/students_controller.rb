@@ -4,9 +4,26 @@ class StudentsController < ApplicationController
   def index
     @students = Student.all
   end
+  
+  
 
   def show
+    @student = set_student
+    if @student.active == false
+      @status = "inactive"
+    else  
+      @status = "active"
+    end
   end
+
+  def active
+    @student = set_student
+    @student.active = !@student.active
+    @student.save
+    redirect_to student_path(@student)
+  end
+
+
 
   private
 
